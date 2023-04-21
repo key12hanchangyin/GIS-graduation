@@ -1,0 +1,89 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>景区面积</title>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.23/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.23/"></script>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      .esri-editor .esri-item-list__scroller {
+        max-height: 350px;
+      }
+    </style>
+
+    <script>
+      require(["esri/WebMap", "esri/views/MapView", "esri/widgets/LayerList", "esri/widgets/Expand","esri/widgets/AreaMeasurement2D",  "esri/widgets/BasemapGallery"], (
+        WebMap,
+        MapView,
+        LayerList,
+        Expand,
+        AreaMeasurement2D,
+        BasemapGallery
+      ) => {
+        let pointLayer, lineLayer, polygonLayer;
+
+        // Create a map from the referenced webmap item id
+        const webmap = new WebMap({
+          portalItem: {
+            id: "e70873cbebfa480180a65dec4a14f320"
+          }
+        });
+
+        const view = new MapView({
+          container: "viewDiv",
+          map: webmap
+        });
+        let layerList = new LayerList({view: view});
+        layerListExpand = new Expand({
+                     expandIconClass: "esri-icon-layer-list",  
+                     view: view,
+                     content: layerList
+});
+       let measurementWidget = new AreaMeasurement2D({
+                     view: view
+                     
+});
+let basemapGallery = new BasemapGallery({view: view});
+layerListExpand1 = new Expand({
+                     expandIconClass: "esri-icon-measure-area",  
+                     view: view,
+                     content: measurementWidget
+});
+layerListExpand2 = new Expand({
+                     expandIconClass: "esri-icon-layers",  
+                     view: view,
+                     content: basemapGallery
+});
+
+        view.when(() => {
+        //   view.popup.antoOpenEnabled = false;
+            view.ui.add(layerListExpand, "top-left");
+            view.ui.add(layerListExpand1, "top-right");
+            view.ui.add(layerListExpand2,"top-left");
+          });
+        });
+      
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>

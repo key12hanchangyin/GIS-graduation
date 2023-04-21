@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视线规划</title>
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
+    <script src="https://js.arcgis.com/4.25/"></script>
+</head>
+<body>
+    <div id="viewDiv"></div>
+</body>
+<script>
+   require([
+   "esri/config",
+   "esri/views/SceneView", 
+   "esri/WebScene",
+   "esri/widgets/LineOfSight",
+   "esri/widgets/Expand"
+        ], function (esriConfig,SceneView,WebScene,LineOfSight,Expand) {
+          // esriConfig.apiKey = "AAPKe0b4cca835d2409a85d260cf835cae65fPNM3MPRik6Gzu1eAjK-Vzu0WJ-Dre6_mzRKRZe9ZSNnZBYVpclrQ86tZTkdMrBw";
+          const scene = new WebScene({
+          portalItem: {
+            // autocasts as new PortalItem()
+            id: "e81e0c66f2ad47c79f1db6d4175ae2ea"
+          }
+        });
+        const view = new SceneView({
+          map: scene,
+          container: "viewDiv",
+          padding: {
+            top: 40
+          }
+        });
+
+        const lineOfSight = new LineOfSight({
+                   view: view
+});
+layerListExpand = new Expand({
+                     expandIconClass: "esri-icon-visible",  
+                     view: view,
+                     content: lineOfSight
+});
+
+// Add widget to the bottom left corner of the view
+view.ui.add(layerListExpand, {
+  position: "top-right"
+});
+   
+     
+        
+        })
+</script>
+</html>

@@ -1,0 +1,109 @@
+<!doctype>
+<!-- <html xmlns="http://www.w3.org/1999/xhtml"> -->
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>GIS黄河流域文旅系统</title>
+	<meta name="keywords" content="GIS系统">
+	<link href="../css/index.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
+    <script src="https://js.arcgis.com/4.25/"></script>
+</head>
+
+<body>
+	<!--主页头部-->
+	<div class="top">
+		<div class="menu">
+			<ul>
+				<li><a href="../html/加载二维景点地图.html">景点地图浏览</a></li>
+				<li><a href="../html/景点属性表.html">景点信息表</a></li>
+				<li><a href="../html/小吃店信息表.html">景点周围小吃店信息表</a></li>
+				<li><a href="../html/宾馆信息表.html">景点周围宾馆信息表</a></li>
+				<li><a href="../html/停车点信息表.html">景点周围车位信息表</a></li>
+				<li><a href="../html/查询景点信息.html">查询旅游景点信息</a></li>
+				<li><a href="../html/增删改查景点信息.html">添加兴趣点</a></li>
+				<li><a href="#">路线规划<table>
+							<tr>
+								<td>
+									<ul>
+										<li><a href="../html/景区面积.html">查询景区面积</a></li>
+										<li><a href="../html/二三维混合量算.html">距离面积测量</a></li>
+										<li><a href="../html/景点路径导航.html">景点路径导航</a></li>
+									</ul>
+								</td>
+							</tr>
+						</table></a></li>
+				<li><a href="#">景区三维展示<table>
+							<tr>
+								<td>
+									<ul>
+										<li><a href="../html/加载三维景点地图.html">浏览三维景点场景</a></li>
+										<li><a href="../html/三维场景天际线分析.html">景点周围可见范围</a></li>
+										<li><a href="../html/三维场景剖面分析.html">景点周围地势</a></li>
+										
+									</ul>
+								</td>
+							</tr>
+						</table></a></li>
+				<!-- <li><a href="#">三维场景<table>
+							<tr>
+								<td>
+									<ul>
+										<li><a href="../html/加载景点三维场景.html">加载景点三维场景</a></li>
+										<li><a href="../html/三维场景基本功能.html">景点三维场景游览</a></li>
+										<li><a href="../html/三维场景天气切换.html">景点场景天气切换</a></li>
+									</ul>
+								</td>
+							</tr>
+						</table></a></li> -->
+				<!-- <li><a href="../html/定位.html">实时导航(微软浏览器最佳)</a></li> -->
+			</ul>
+		</div>
+	</div>
+	<div class="main">
+		<p  align="center" style="color: aqua;"><strong><em>系统简介</em></strong></p>
+		<h1>黄河是中华民族的母亲河。黄河沿岸分布着各式的文旅景点，它们蕴含着华夏文明的珍贵的历史底蕴和文化脉络。从位于山东省东营市黄河入海口的生态旅游区到位于青海省的炳灵寺石窟，黄河流域沿岸的文旅资源对当代中国蕴含着无穷无尽的价值。</h1><br>
+		<h1>自十八大以来，中华民族进入了伟大复兴的关键时期。每一个中国公民都在为了祖国的经济强盛、文化强盛、军事强盛等目标而努力。要全面建成社会主义现代化国家需要强大的经济，而旅游+经济可以为实现这一目标而赋能。通过收集黄河流域文化旅游景点数据而建成的该GIS文旅系统可以更好的为游客提供服务，更好的带动黄河流域旅游业的发展。</h1><br>
+		<h1>地理信息技术(GIS)和计算机管理系统结合而成的黄河文旅系统包含了许多的功能。它可以比较完善的为游客提供服务</h1>
+		<h1>各位游客可以点击简介上方的各类功能按钮进行相关的操作；在这里，你不仅可以浏览黄河流域各文化旅游景点的相关信息，还可以定制好旅游路线。更多的惊喜等待着您的发掘！</h1>
+	</div>
+	<div id="viewDiv"></div> 
+	<!-- <div class="footer">
+		技术支持：
+		<a href="https://www.sdjtu.edu.cn/" target="_blank" Mr.Wu </a>&nbsp;&nbsp; 山东交通学院</a>
+	</div> -->
+</body>
+<script>
+	require([
+		   "esri/config",
+		   "esri/Map",
+		   "esri/views/MapView", 
+		   "esri/WebMap",
+		   "esri/widgets/Legend",
+		   "esri/widgets/Bookmarks"         
+		 ], function (esriConfig,Map, MapView,WebMap,Legend,Bookmarks) {
+		//    esriConfig.apiKey = "AAPK88933bf01a3741ff8c2ab98cc01c4577ZDMuvHxVnziWXRNo-ujAxF3OTONn8ZCf8Evg_AcFj8XPIYEVlY1DoKwk-e5WU997";
+		 //  const map = new Map({
+		  // basemap: "arcgis-topographic"    //osm
+		//   });
+	   var webmap = new WebMap({
+		   portalItem: {id:"73a0dd816487450abc964ab02ff3e256"}
+		 });
+		   const view = new MapView({
+			 map: webmap,
+			 container: "viewDiv"
+		   }); 
+		   view.when(function() {
+				 var featureLayer = webmap.layers.getItemAt(1);
+				   var legendBtn = new Legend({
+					 view:view,
+					 layerInfos: [{
+					   layer:featureLayer,
+					   title:"黄河流域文旅景点图例"
+								 }]
+										   });                      
+			   view.ui.add(legendBtn,"bottom-right");
+			 });
+		 })
+ </script>
+</html>

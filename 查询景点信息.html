@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+      <title>查询景点信息</title>
+      <style>
+        html,
+        body,
+        #viewDiv {
+          padding: 0;
+          margin: 0;
+          height: 100%;
+          width: 100%;
+        }
+      </style>
+      <link rel="stylesheet" href="https://js.arcgis.com/4.22/esri/themes/light/main.css">
+      <script src="https://js.arcgis.com/4.25/"></script>
+    </head>
+    <body>
+        <div id="viewDiv"></div>
+    </body>
+      <script>
+     require(["esri/Map", 
+     "esri/views/MapView", 
+     "esri/layers/FeatureLayer", 
+      "esri/widgets/Search", 
+      "esri/WebMap",
+      "esri/widgets/LayerList", 
+      "esri/widgets/Expand", 
+      "esri/widgets/Legend",
+      "esri/widgets/Home",
+      "esri/widgets/Fullscreen",
+      "esri/widgets/Compass",
+      "esri/widgets/CoordinateConversion",
+      "esri/widgets/ScaleBar",
+      "esri/widgets/BasemapGallery",
+      
+    
+    
+    ], (
+  Map,MapView,FeatureLayer,Search,WebMap,LayerList,Expand,Legend,Home,Fullscreen,Compass,CoordinateConversion,ScaleBar,BasemapGallery  ) => {
+       
+    //  const map = new Map({ basemap: "streets-vector" }); 
+     var webmap = new WebMap({
+          portalItem: {id:"ff73e149b502497ea0207a60308eeb5f"}
+        });
+
+    const view = new MapView({ container: "viewDiv",  map: webmap,  center: [100, 35],  scale: 10000000  }); 
+
+          let homeWidget = new Home({view: view});
+          fullscreen = new Fullscreen({view: view});
+          let compass = new Compass({view: view});
+          let ccWidget = new CoordinateConversion({view: view});
+          let scaleBar = new ScaleBar({view: view});
+          let basemapGallery = new BasemapGallery({view: view});
+
+let layerList = new LayerList({view: view});
+layerListExpand = new Expand({
+                     expandIconClass: "esri-icon-layer-list",  
+                     view: view,
+                     content: layerList
+});
+layerListExpand1 = new Expand({
+                     expandIconClass: "esri-icon-layer-list",  
+                     view: view,
+                     content: basemapGallery
+});
+       
+const featureLayerDistricts = new FeatureLayer({  
+        url:  "https://services3.arcgis.com/eImJEGQpp3UVtbdw/arcgis/rest/services/%E9%BB%84%E6%B2%B3%E6%B5%81%E5%9F%9F%E6%97%85%E6%B8%B8%E6%99%AF%E7%82%B9%E5%B0%8F%E5%90%83%E4%BD%8F%E5%AE%BF%E5%81%9C%E8%BD%A6/FeatureServer/0",   //修改
+        popupTemplate: { title: "<font color=blue><b><em>景点名称：</em></b></font><font color=slategray>{景点名称}</font><br><font color=green><b><em>景点简介：</em></b></font><font color=slategray>{景点简介}</font><br><font color=blue><b><em>所属行政区：</em></b></font><font color=slategray>{行政区}</font><br><font color=blue><b><em>景点类型：</em></b></font><font color=slategray>{景点类型}</font>",  overwriteActions: true,  outFields: ["*"] }, //修改
+                                                     });    
+       
+// const featureLayerSenators = new FeatureLayer({  
+//         url:  "https://services3.arcgis.com/eImJEGQpp3UVtbdw/arcgis/rest/services/%E9%BB%84%E6%B2%B3%E6%B5%81%E5%9F%9F%E6%97%85%E6%B8%B8%E6%99%AF%E7%82%B9%E5%B0%8F%E5%90%83%E4%BD%8F%E5%AE%BF%E5%81%9C%E8%BD%A6/FeatureServer/0", //修改
+//         popupTemplate: { title: "<a href={Web_Page} target='_blank'> {景点名称}</a>",  overwriteActions: true  },  //修改
+//         outFields: ["*"]
+//                                                      });
+//        webmap.add(featureLayerDistricts);   //修改
+       
+const searchWidget = new Search({ view: view,  allPlaceholder: "请查询",  includeDefaultSources: false,  sources: [ 
+ {  
+      layer: featureLayerDistricts,  searchFields: ["景点名称"],  displayField: "景点名称",  exactMatch: false,  outFields: ["*"],  name: "景点名称",     placeholder: "请输入黄河流域景点名称"            //修改
+                        },  
+//  {
+//       layer: featureLayerSenators,  searchFields: ["景点名称"],  suggestionTemplate: "{景点名称}",  exactMatch: false,  outFields: ["*"],  //修改
+//       placeholder: "example: Casey",  name: "Senators",  zoomScale: 500000,  resultSymbol: {  
+//            type: "picture-marker",  
+//            url:  "https://developers.arcgis.com/javascript/latest//sample-code/widgets-search-multiplesource/live/images/senate.png",  
+//            height: 36,  width: 36  
+//                                                                                                }  
+//                                                                                                                },  
+//  {  name: "世界景点查询",  placeholder: "例如:黄石公园",  
+//     apiKey: "AAPK88933bf01a3741ff8c2ab98cc01c4577ZDMuvHxVnziWXRNo-ujAxF3OTONn8ZCf8Evg_AcFj8XPIYEVlY1DoKwk-e5WU997",  //修改
+//     singleLineFieldName: "SingleLine",  
+//     locator:  "https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer"                    }  
+                                                                                                                           ]  });  
+
+    const searchWidget1 = new Search({ view: view,  allPlaceholder: "请查询",  includeDefaultSources: false,  sources: [ 
+ {  
+      layer: featureLayerDistricts,  searchFields: ["行政区"],  displayField: "行政区",  exactMatch: false,  outFields: ["*"],  name: "行政区",     placeholder: "请输入黄河流域景点所属行政区,如:山东济南"            //修改
+                        },  
+                                                                                                                           ]  });  
+           view.when(function() {
+      var featureLayer = webmap.layers.getItemAt(2);
+      var legendBtn = new Legend({
+                    view:view,
+                    layerInfos: [{
+                      layer:featureLayer,
+                      title:"黄河流域文旅景点图例"
+                                }]
+                                          });   
+     view.ui.add(searchWidget, {  position: "top-right"  });  
+      view.ui.add(searchWidget1, {  position: "top-right"  }); 
+      view.ui.add(homeWidget,"top-left");
+      view.ui.add(fullscreen,"top-left");
+      view.ui.add(compass,"top-left");
+      view.ui.add(ccWidget,"bottom-left");
+      view.ui.add(scaleBar,"bottom-left"); 
+      view.ui.add(layerListExpand, "top-left");
+      view.ui.add(legendBtn,"bottom-right");
+      view.ui.add(layerListExpand1,"top-left");
+    });
+    })
+
+        </script>
+        </html>

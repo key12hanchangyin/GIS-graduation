@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加载三维景点地图</title>
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
+    <script src="https://js.arcgis.com/4.25/"></script>
+</head>
+<body>
+    <div id="viewDiv"></div>
+</body>
+<script>
+   require([
+   "esri/config",
+   "esri/views/SceneView", 
+   "esri/widgets/DirectLineMeasurement3D",
+   "esri/widgets/AreaMeasurement3D",
+   "esri/widgets/Daylight",
+   "esri/widgets/Home",
+   "esri/widgets/LayerList",
+   "esri/WebScene",
+   "esri/widgets/Weather",
+   "esri/widgets/Fullscreen",
+   "esri/widgets/Expand"
+        ], function (esriConfig,SceneView,DirectLineMeasurement3D,AreaMeasurement3D,Daylight,Home,LayerList,WebScene,Weather,Fullscreen,Expand) {
+          // esriConfig.apiKey = "AAPK542f7dd36fdd4e20aa2a298eb11d59f6ppdNB2ZRM-rddt-8-wT0dcczY2e_d8j0fGdKblZU82qmyxsXGGDpZrtiO4TmYrzM";
+          const scene = new WebScene({
+          portalItem: {
+            // autocasts as new PortalItem()
+            id: "e81e0c66f2ad47c79f1db6d4175ae2ea"
+          }
+        });
+        const view = new SceneView({
+          map: scene,
+          container: "viewDiv",
+          padding: {
+            top: 40
+          }
+        });
+
+   
+        let measurementWidget = new DirectLineMeasurement3D({
+           view: view
+                 });
+        let measurementWidget1 = new AreaMeasurement3D({
+           view: view
+                 });
+        const daylight = new Daylight({
+           view: view
+                 });
+        let homeWidget = new Home({
+           view: view
+                 });
+        let layerList = new LayerList({
+           view: view
+                 });
+        const widget = new Weather({ view: view });
+        fullscreen = new Fullscreen({view: view});
+        layerListExpand = new Expand({
+                     expandIconClass: "esri-icon-layer-list",  
+                     view: view,
+                     content: layerList
+});
+layerListExpand1 = new Expand({
+                     expandIconClass: "esri-icon-measure",  
+                     view: view,
+                     content: measurementWidget
+});
+layerListExpand2 = new Expand({
+                     expandIconClass: "esri-icon-measure-area",  
+                     view: view,
+                     content: measurementWidget1
+});
+layerListExpand3 = new Expand({
+                     expandIconClass: "esri-icon-partly-cloudy",  
+                     view: view,
+                     content: widget
+});
+
+
+        view.ui.add(homeWidget, "top-left");
+        view.ui.add(fullscreen, "top-left");
+        view.ui.add(layerListExpand, {position: "top-left"});
+        view.ui.add(layerListExpand1, "top-left");
+        view.ui.add(layerListExpand2,"top-left");
+        view.ui.add(layerListExpand3, "top-right");
+        view.ui.add(daylight, "bottom-right");
+      
+        
+        })
+</script>
+</html>

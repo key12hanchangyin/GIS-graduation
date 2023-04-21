@@ -1,0 +1,99 @@
+*{
+	margin:0px;
+	padding:0px;
+	font-size:13px;
+}
+.top{
+	width:1530px; height:190px;
+	margin:0 auto;  /*水平居中*/
+	background:url(../images/top.jpg) center top no-repeat;
+}
+.menu{
+	padding-top:155px;
+	width:1530px;height:35px;
+}
+.menu ul{
+	list-style:none;  /*项目列表无项目符号*/
+}
+.menu ul li {
+	position:relative;  /*使包含的表格可以绝对定位，详见第4章*/
+	width: 160px;
+	line-height:35px;
+	text-align:center;
+	float:left;/*主菜单列表项水平放置*/
+}
+.menu table {
+	position:absolute; /*table相对父容器li的绝对定位，详见第4章*/
+	top:35px; left:0; /*列表菜单与主菜单项的距离*/
+}	 
+.menu ul li a{
+	line-height:35px;
+	display:block; /*显示为块级元素，此元素前后会带有换行符*/
+	text-align:center;
+	color:#5b4646;
+	text-decoration:none;
+}
+.menu ul li a.first{
+	display:block;
+	width:200px;height:35px;
+	text-align:center;
+	font-size:10px;
+	color:#797373;  /*等效#FFFFFF*/
+	line-height:35px;
+	text-decoration:none;
+	background:url(../images/navhover.png) no-repeat;
+	
+}
+.menu ul li a:hover{
+	line-height:35px;
+	text-align:center;
+	color:#fff;
+	background:url(../images/navhover.png) no-repeat;
+}    	
+.menu ul li ul {
+	width:120px;
+	visibility:hidden; /*菜单项通常是不可见的*/
+	position:absolute; /*菜单项绝对定位*/
+	text-align:left;
+	left:0px;top:0;
+	background-color:#DBDBDB;
+} 	
+.menu ul li ul li {
+	height:35px;
+	line-height:35px;
+	border-bottom:1px solid #999;	
+	font-size:14px; /*设定菜单项文字的大小*/
+} 				 
+.menu ul li:hover ul{
+	visibility:visible; /*菜单项在鼠标移至超链接上时可见*/	
+} 			 			
+.menu ul li ul li a{
+	display:block;   /*重要!*/
+	width:120px; height:35px;
+	line-height:35px;
+	  /*菜单项颜色：绿色背景*/
+	color:#666;
+	
+}   
+.menu ul li ul li a:hover{
+	 background-image:none;
+	 background:#FF981D;
+	 line-height:35px;
+}   
+.main{
+	width:1520px; margin: 0 auto;height: 150px; background-color: antiquewhite; 
+}
+/* .footer {
+    margin: 0 auto;
+    width: 1530px;
+    background: #9FC;
+}
+
+.footer {
+    line-height: 38px;
+    text-align: center;
+    font-size: 12px;
+} */
+#viewDiv{
+	width:1520px; margin: 0 auto; height: 400px; 
+}

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加载二维景点地图</title>
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
+    <script src="https://js.arcgis.com/4.25/"></script>
+</head>
+<body>
+    <div id="viewDiv"></div>
+</body>
+<script>
+   require([
+          "esri/config",
+          "esri/Map",
+          "esri/views/MapView", 
+          "esri/WebMap",
+          "esri/widgets/Legend",
+          "esri/widgets/Home",
+          "esri/widgets/Fullscreen",
+          "esri/widgets/Compass",
+          "esri/widgets/CoordinateConversion",
+          "esri/widgets/ScaleBar",
+          "esri/widgets/BasemapGallery",
+          "esri/widgets/LayerList",
+          "esri/widgets/Expand",
+          "esri/widgets/Print",
+          "esri/widgets/Bookmarks",
+          "esri/widgets/Track",
+          "esri/widgets/Locate"
+          
+                 
+        ], function (esriConfig,Map, MapView,WebMap,Legend,Home,Fullscreen,Compass,CoordinateConversion,ScaleBar,BasemapGallery,LayerList,Expand,Print,Bookmarks,Track,Locate) {
+          esriConfig.apiKey = "AAPK88933bf01a3741ff8c2ab98cc01c4577ZDMuvHxVnziWXRNo-ujAxF3OTONn8ZCf8Evg_AcFj8XPIYEVlY1DoKwk-e5WU997";
+        //  const map = new Map({
+         // basemap: "arcgis-topographic"    //osm
+       //   });
+     
+      var webmap = new WebMap({
+          portalItem: {id:"ff73e149b502497ea0207a60308eeb5f"},
+        });
+          const view = new MapView({
+            map: webmap,
+            container: "viewDiv"
+          }); 
+          let homeWidget = new Home({view: view});
+          fullscreen = new Fullscreen({view: view});
+          let compass = new Compass({view: view});
+          let ccWidget = new CoordinateConversion({view: view});
+          let scaleBar = new ScaleBar({view: view});
+          let basemapGallery = new BasemapGallery({view: view});
+          let layerList = new LayerList({view: view});
+          const print = new Print({view: view});
+          const bookmarks = new Bookmarks({
+                     view: view,
+                     editingEnabled: true,
+                     defaultCreateOptions: {
+                     takeScreenshot: true,
+                     captureViewpoint: true,
+                     captureTimeExtent: true, // the time extent of the view will not be saved in the bookmark
+                     screenshotSettings: {
+                          width:50,
+                          height:50
+     }
+   }
+});
+          let trackWidget = new Track({
+                     view: view
+});
+
+
+          let locateWidget = new Locate({
+                    view: view
+});
+
+          layerListExpand = new Expand({
+                     expandIconClass: "esri-icon-layer-list",  
+                     view: view,
+                     content: layerList
+});
+          layerListExpand1 = new Expand({
+                     expandIconClass: "esri-icon-layers",  
+                     view: view,
+                     content: basemapGallery
+});
+          layerListExpand2 = new Expand({
+                     expandIconClass: "esri-icon-printer",  
+                     view: view,
+                     content: print
+});
+          layerListExpand3 = new Expand({
+                     expandIconClass: "esri-icon-blank-map-pin",  
+                     view: view,
+                     content: bookmarks
+});
+          const legendExpand = new Expand({
+                     expandIconClass: "esri-icon-legend",  
+                     view: view,
+                     content: new Legend({
+                     view: view
+            // layerInfos: [{
+            //           layer:featureLayer,
+            //           title:"黄河流域文旅景点图例"
+            //                     }]
+          })
+          // expanded: view.widthBreakpoint !== "xsmall"
+        });
+       
+                  
+
+              
+              view.ui.add(homeWidget, "top-left");
+              view.ui.add(fullscreen, "top-left");
+              view.ui.add(compass,"top-left");
+              view.ui.add(locateWidget, "top-left");
+              view.ui.add(trackWidget, "top-left");
+              // view.ui.add(basemapGallery, {position:"bottom-left"});
+              view.ui.add(layerListExpand, "top-left");
+              view.ui.add(layerListExpand1,"top-left");
+              view.ui.add(layerListExpand2,"top-left");
+              view.ui.add(layerListExpand3,"top-left");
+              view.ui.add(legendExpand,"top-right");
+              view.ui.add(ccWidget,"bottom-right");
+              // view.ui.add(print, {position: "bottom-right"});
+              view.ui.add(scaleBar,{position:"bottom-left"});
+             
+              // view.ui.add(layerList,{position: "top-right"});
+           
+        })
+</script>
+</html>
